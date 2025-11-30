@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package shared.proto.utils.audio;
+
+enum AudioType {
+  INT32 = 1;
+  FLOAT32 = 2;
+}
+
+message AudioData {
+  repeated int32 left = 1 [packed=true];
+  repeated int32 right = 2 [packed=true];
+
+}
+
+message Audio {
+  optional uint32 sample_rate = 1;
+  optional uint32 channels = 2;
+}

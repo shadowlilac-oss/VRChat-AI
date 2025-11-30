@@ -1,0 +1,45 @@
+module(
+    name = "lilac",
+    version = "1.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_proto", version = "7.1.0")
+bazel_dep(name = "protobuf", version = "33.1")
+bazel_dep(name = "rules_python", version = "1.7.0")
+
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    python_version = "3.10",
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "pypi_audio_stt",
+    python_version = "3.10",
+    requirements_lock = "//:requirements/requirements_audio_stt.txt",
+)
+
+pip.parse(
+    hub_name = "pypi_audio_tts",
+    python_version = "3.10",
+    requirements_lock = "//:requirements/requirements_audio_tts.txt",
+)
+
+pip.parse(
+    hub_name = "pypi_text",
+    python_version = "3.10",
+    requirements_lock = "//:requirements/requirements_text.txt",
+)
+
+pip.parse(
+    hub_name = "pypi_jupyter",
+    python_version = "3.10",
+    requirements_lock = "//:requirements/requirements_jupyter.txt",
+)
+
+
+use_repo(pip, "pypi_audio_stt", "pypi_audio_tts", "pypi_text", "pypi_jupyter")
+
+

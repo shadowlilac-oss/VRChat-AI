@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package shared.proto.utils.text;
+
+
+message TextChunk {
+  optional string text_chunk = 1;
+
+}
