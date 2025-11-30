@@ -4,11 +4,23 @@ module(
     compatibility_level = 1,
 )
 
+bazel_dep(name = "rules_rust", version = "0.63.0")
 bazel_dep(name = "rules_proto", version = "7.1.0")
 bazel_dep(name = "protobuf", version = "33.1")
 bazel_dep(name = "rules_python", version = "1.7.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.10.0")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
+bazel_dep(name = "rules_oci", version = "2.2.6")
+bazel_dep(name = "platforms", version = "0.0.11")
 
+# Rust stuff
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = ["1.89.0"],
+)
 
+# Python repos
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     python_version = "3.10",
@@ -20,26 +32,37 @@ pip.parse(
     python_version = "3.10",
     requirements_lock = "//:requirements/requirements_audio_stt.txt",
 )
-
 pip.parse(
     hub_name = "pypi_audio_tts",
     python_version = "3.10",
     requirements_lock = "//:requirements/requirements_audio_tts.txt",
 )
-
 pip.parse(
     hub_name = "pypi_text",
     python_version = "3.10",
     requirements_lock = "//:requirements/requirements_text.txt",
 )
-
 pip.parse(
     hub_name = "pypi_jupyter",
     python_version = "3.10",
     requirements_lock = "//:requirements/requirements_jupyter.txt",
 )
+use_repo(pip, "pypi_audio_stt", "pypi_audio_tts", "pypi_jupyter", "pypi_text")
 
-
-use_repo(pip, "pypi_audio_stt", "pypi_audio_tts", "pypi_text", "pypi_jupyter")
-
-
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_base",
+    image = "gcr.io/distroless/base",
+    platforms = ["linux/amd64"],
+    # 'latest' is not reproducible, but it's convenient.
+    # During the build we print a WARNING message that includes recommended 'digest' and 'platforms'
+    # values which you can use here in place of 'tag' to pin for reproducibility.
+    tag = "latest",
+)
+oci.pull(
+    name = "ubuntu",
+    image = "ubuntu",
+    platforms = ["linux/amd64"],
+    tag = "22.04",
+)
+use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "ubuntu", "ubuntu_linux_amd64")
