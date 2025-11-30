@@ -1,5 +1,6 @@
-load("@rules_python//python:defs.bzl", "py_binary")
+#load("@rules_python//python:defs.bzl", "py_binary")
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
+load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_image_layer")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
 
 py_binary(
