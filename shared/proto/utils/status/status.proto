@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package shared.proto.utils.status;
+
+message EmptyRequest {}
+
+message EmptyResponse {}
+
+message StatusResponse {
+  optional int32 status = 1;
+}

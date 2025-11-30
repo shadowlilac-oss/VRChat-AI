@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package shared.proto.utils.status;
+
+enum Control {
+  SHUTDOWN = 1;
+  CLEAR_CACHE = 2;
+}
+
+message ControlMessage {
+  optional Control control = 1;
+}
+
+message Latency {
+  optional int32 latency = 1; // Can be either i/o
+}
+
+

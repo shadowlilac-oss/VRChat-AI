@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package shared.proto.utils.vision;
+
+
+message Image {
+  optional uint32 length = 1;
+  optional uint32 width = 2;
+  optional uint32 channels = 3;
+  optional bytes media = 4;
+}

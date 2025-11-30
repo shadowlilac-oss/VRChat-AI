@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+package shared.proto.services.llm;
+
+import "shared/proto/utils/text/text.proto";
+import "shared/proto/utils/status/control.proto";
+import "shared/proto/utils/status/status.proto";
+
+
+message GenerationRequest {
+  optional string id = 1; // ID which will map to redis conversation
+  optional proto.utils.text.TextChunk text = 2;
+}
+
+message GenerationResponse {
+  optional proto.utils.text.TextChunk text = 1;
+}
+
+service LLMService {
+  rpc Generate(GenerationRequest) returns (stream GenerationResponse) {}
+
+
+  // Available on all services
+  rpc Status(proto.utils.status.ControlMessage) returns (proto.utils.status.StatusResponse);
+  rpc Latency(proto.utils.status.Latency) returns (proto.utils.status.Latency);
+}
