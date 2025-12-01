@@ -13,6 +13,8 @@ def main():
     x = torch.rand(3, 3)
     print(f"\nRandom Tensor:\n{x}")
 
+    print("Is torch compiled with CUDA: ", torch.cuda.is_available())
+
 
 if __name__ == "__main__":
     main()
