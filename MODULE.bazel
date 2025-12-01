@@ -7,6 +7,8 @@ bazel_dep(name = "aspect_rules_py", version = "1.3.1")
 bazel_dep(name = "rules_pkg", version = "1.0.1")
 bazel_dep(name = "rules_oci", version = "2.2.6")
 bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_uv", version = "0.88.0")
+bazel_dep(name = "rules_proto_grpc_python", version = "5.8.0")
 
 # Rust stuff
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
@@ -61,3 +63,4 @@ oci.pull(
     tag = "22.04",
 )
 use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "ubuntu", "ubuntu_linux_amd64")
+

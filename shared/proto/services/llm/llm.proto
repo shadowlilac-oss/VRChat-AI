@@ -16,7 +16,7 @@ message GenerationResponse {
   optional proto.utils.text.TextChunk text = 1;
 }
 
-service LLMService {
+service LLM {
   rpc Generate(GenerationRequest) returns (stream GenerationResponse) {}
 
 

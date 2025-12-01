@@ -3,12 +3,22 @@ load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_image_layer")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
 
 
+py_library(
+    name = "server_lib",
+    srcs = ["server_lib.py"],
+    deps = [
+        "@pypi_text//openai",
+        "//shared/proto/services/llm:llm_python_lib_server"
+    ],
+)
+
 py_binary(
     name = "server",
     srcs = ["main.py"],
     main = "main.py",
     deps = [
-        "@pypi_text//openai",
+        ":server_lib",
+        "//shared/proto/services/llm:llm_python_lib_server"
     ],
 )
 
