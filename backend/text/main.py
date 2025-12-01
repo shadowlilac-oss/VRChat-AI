@@ -13,7 +13,7 @@ def serve():
     # Register the imported class
     llm_pb2_grpc.add_LLMServicer_to_server(server_lib.LLMServicer(), server)
 
-    port = os.environ.get('SERVER_PORT', "50051")
+    port = os.environ.get('TEXT_SERVER_PORT', "50051")
     server.add_insecure_port(f'[::]:{port}')
     print(f"Server starting on port {port}...")
     server.start()

@@ -1,0 +1,5 @@
+CREATE TABLE conversation_logs (
+    id VARCHAR(255) PRIMARY KEY,
+    ts TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    chatml_conversation JSONB
+);
