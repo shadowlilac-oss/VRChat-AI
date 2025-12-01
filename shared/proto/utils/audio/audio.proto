@@ -10,7 +10,6 @@ enum AudioType {
 message AudioData {
   repeated int32 left = 1 [packed=true];
   repeated int32 right = 2 [packed=true];
-
 }
 
 message Audio {

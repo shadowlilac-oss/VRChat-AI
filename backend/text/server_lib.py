@@ -1,13 +1,14 @@
 from shared.proto.services.llm import llm_pb2
 from shared.proto.services.llm import llm_pb2_grpc
 from shared.proto.utils.text import text_pb2
-import openai
+from openai import OpenAI
+import os
 
 class LLMServicer(llm_pb2_grpc.LLMServicer):
     def __init__(self):
         self.__client = OpenAI(
-            base_url=os.environ['OPENAI_LLM_ADDRESS'],
-            api_key=os.environ['OPENAI_LLM_API_KEY'],
+            base_url=os.environ.get('OPENAI_LLM_ADDRESS', ""),
+            api_key=os.environ.get('OPENAI_LLM_API_KEY', ""),
         )
 
     def Generate(self, request, context):
@@ -15,9 +16,11 @@ class LLMServicer(llm_pb2_grpc.LLMServicer):
         prompt: str = request.text
         conversation_id: str = request.id
 
+        # Get data from query
+
 
         completion = client.chat.completions.create(
-            model="NousResearch/Meta-Llama-3-8B-Instruct",
+            model=os.environ.get('OPENAI_LLM_NAME', ""),
             messages=[
                 {"role": "user", "content": "Hello!"},
             ], stream=True

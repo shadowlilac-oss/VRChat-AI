@@ -9,7 +9,8 @@ import "shared/proto/utils/status/status.proto";
 
 message GenerationRequest {
   optional string id = 1; // ID which will map to redis conversation
-  optional proto.utils.text.TextChunk text = 2;
+  optional bool resume = 2;
+  optional proto.utils.text.TextChunk text = 3;
 }
 
 message GenerationResponse {

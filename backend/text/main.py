@@ -1,5 +1,6 @@
 import sys
 import grpc
+import os
 from concurrent import futures
 
 from backend.text import server_lib
@@ -10,11 +11,11 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=8))
 
     # Register the imported class
-    llm_pb2_grpc.add_LLMServicer_to_server(CalculatorServicer(), server)
+    llm_pb2_grpc.add_LLMServicer_to_server(server_lib.LLMServicer(), server)
 
-    port = os.environ['SERVER_PORT']
+    port = os.environ.get('SERVER_PORT', "50051")
     server.add_insecure_port(f'[::]:{port}')
-    print(f"Audio Server starting on port {port}...")
+    print(f"Server starting on port {port}...")
     server.start()
     server.wait_for_termination()
 

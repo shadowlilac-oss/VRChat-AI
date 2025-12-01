@@ -1,0 +1,1 @@
+bazel run //backend/text:image_load
