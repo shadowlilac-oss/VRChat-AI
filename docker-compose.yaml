@@ -1,18 +1,18 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:latest
-    container_name: vrcai_text_backend_db
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql
-      - ./backend/text/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+#  db:
+#    image: postgres:latest
+#    container_name: vrcai_text_backend_db
+#    environment:
+#      POSTGRES_USER: ${POSTGRES_USER}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#      POSTGRES_DB: ${POSTGRES_DB}
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql
+#      - ./backend/text/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
   text_server:
     image: vrcai_text_backend:latest
@@ -20,32 +20,32 @@ services:
     environment:
       OPENAI_LLM_API_KEY: ${OPENAI_LLM_API_KEY}
       LLM_API_BASE: http://vllm_llm:8000/v1
-    depends_on:
-      - db
-      - vllm_llm
+#    depends_on:
+#      - db
+#      - vllm_llm
 
-  vllm_llm:
-    image: vllm/vllm-openai:latest
-    container_name: vllm_llm_server
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              device_ids: ['0', '3']
-              capabilities: [gpu]
-    ports:
-      - "8000:8000"
-    shm_size: '2gb'
-    volumes:
-      - vllm_cache:/root/.cache/huggingface
-    environment:
-      HF_TOKEN: ${HF_TOKEN}
-    command:
-      - --model
-      - Qwen/Qwen3-0.6B
-      - --host
-      - 0.0.0.0
+#  vllm_llm:
+#    image: vllm/vllm-openai:latest
+#    container_name: vllm_llm_server
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              device_ids: ['0', '3']
+#              capabilities: [gpu]
+#    ports:
+#      - "8000:8000"
+#    shm_size: '2gb'
+#    volumes:
+#      - vllm_cache:/root/.cache/huggingface
+#    environment:
+#      HF_TOKEN: ${HF_TOKEN}
+#    command:
+#      - --model
+#      - Qwen/Qwen3-0.6B
+#      - --host
+#      - 0.0.0.0
 
 volumes:
   postgres_data:

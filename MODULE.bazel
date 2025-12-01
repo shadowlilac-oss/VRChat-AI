@@ -44,7 +44,14 @@ pip.parse(
     python_version = "3.10",
     requirements_lock = "//:requirements/requirements_jupyter.txt",
 )
-use_repo(pip, "pypi_audio_stt", "pypi_audio_tts", "pypi_jupyter", "pypi_text")
+
+pip.parse(
+    hub_name = "pypi_health",
+    python_version = "3.10",
+    requirements_lock = "//:requirements/requirements_health.txt",
+)
+
+use_repo(pip, "pypi_audio_stt", "pypi_audio_tts", "pypi_jupyter", "pypi_text", "pypi_health")
 
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(

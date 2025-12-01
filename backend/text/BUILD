@@ -8,6 +8,9 @@ py_library(
     srcs = ["server_lib.py"],
     deps = [
         "@pypi_text//openai",
+        "@pypi_text//grpcio_health_checking",
+        "@pypi_text//protobuf",
+        "@pypi_text//grpcio",
         "//shared/proto/services/llm:llm_python_lib_server"
     ],
 )
@@ -18,6 +21,8 @@ py_binary(
     main = "main.py",
     deps = [
         ":server_lib",
+        "@pypi_text//protobuf",
+        "@pypi_text//grpcio",
         "//shared/proto/services/llm:llm_python_lib_server"
     ],
 )

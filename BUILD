@@ -24,3 +24,9 @@ pip_compile(
     requirements_in = "requirements/requirements_text.in",
     requirements_txt = "requirements/requirements_text.txt",
 )
+
+pip_compile(
+    name = "update_health",
+    requirements_in = "requirements/requirements_health.in",
+    requirements_txt = "requirements/requirements_health.txt",
+)

@@ -7,11 +7,17 @@ import "shared/proto/utils/status/control.proto";
 import "shared/proto/utils/status/status.proto";
 
 
-message GenerationRequest {
-  optional string id = 1; // ID which will map to redis conversation
-  optional bool resume = 2;
+message SetupRequest {
+  optional string id = 1; // ID which will map to sql conversation
+  optional string prompt = 2;
   optional proto.utils.text.TextChunk text = 3;
 }
+
+message GenerationRequest {
+    optional string context = 1;
+
+}
+
 
 message GenerationResponse {
   optional proto.utils.text.TextChunk text = 1;

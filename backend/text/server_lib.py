@@ -6,6 +6,7 @@ import os
 
 class LLMServicer(llm_pb2_grpc.LLMServicer):
     def __init__(self):
+        print("LLM Server launched successfully!")
         self.__client = OpenAI(
             base_url=os.environ.get('OPENAI_LLM_ADDRESS', ""),
             api_key=os.environ.get('OPENAI_LLM_API_KEY', ""),
